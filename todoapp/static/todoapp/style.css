@@ -1,0 +1,19 @@
+body {
+  background-image: url("91hcFl.jpg");
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+  padding: 10px;
+  background-color: grey;
+
+}

@@ -1,0 +1,63 @@
+{% extends 'todoapp/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+  </head>
+  <body>
+    {% block body %}
+    {% if task_list %}
+
+      <div class="container">
+        <h2>Today list</h2>
+        <p>Lets get things done</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Task Name</th>
+              <th>Task Prio</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% if task_list %}
+                {% for task in task_list %}
+                <tr class="active">
+                  <td> <a href="{% url 'todoapp:detail' task.id %}">{{task.task_name}}</a></td>
+                  <td>{{task.task_priority}}</td>
+                  <td><form action="deleteTodo/{{task.id}}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Done">
+                  </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              {% else %}
+              {% endif %}
+          </tbody>
+        </table>
+        <form action="addTodo/" method="post">
+          {% csrf_token %}
+          <input type="text" name="task_name">
+          <select name="task_priority">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+            <input type="text" name="task_description">
+          <input type="submit" value="Add">
+        </form>
+      </div>
+
+     {% else %}
+      <div class="container">
+        <h2>No results</h2>
+        <p>There were no results matching your search: "<i>{{request.GET.q}}</i>".</p>
+      </div>
+     {% endif %}
+     {% endblock %}
+  </body>
+</html>
